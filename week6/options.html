@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title></title>
+  </head>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      /* background-color: bisque; */
+      background: url('./sky.jpg') no-repeat;
+      background-size: 100% 100%;
+      background-position: 0 0;
+    }
+    button {
+      width: 120px;
+      height: 30px;
+    }
+    .bt_container {
+      width: 366px;
+      margin: 0 auto;
+      /* text-align: center; */
+      margin-top: 20px;
+    }
+  </style>
+  <body bgcolor="bisque">
+    <table border="1" cellspacing="" cellpadding="" align="center" >
+      <!--<tr colspan=1>-->
+      <tr align="center">
+        <th align="center"><h1>edit</h1></th>
+      </tr>
+      
+        <td>gender</td>
+        <td>
+          <select name="" id="gender">
+            <option value ="man">male</option>
+            <option value ="woman">female</option>
+          </select>
+        </td>
+        
+      </tr>
+      
+    </table>
+    <div class="bt_container">
+      <button type="button" onclick="edit()">submit</button>
+    </div>
+    <script Charset="UTF-8" type="text/javascript">
+      function init(){
+          
+      }
+
+      function ajaxPost(url, data, callBack) {
+          var xhr = new XMLHttpRequest();
+          xhr.open("POST", url, true);
+          xhr.setRequestHeader("Content-Type",
+              "application/x-www-form-urlencoded");
+          xhr.onreadystatechange = function() {
+              if (xhr.status == 200 && xhr.readyState == 4) {
+                  callBack(xhr.responseText)
+              }
+          };
+          xhr.send(data);
+      }
+
+      function callBack(data) {
+          
+      }
+      
+      function setAcademySelect(academys, academy_id){
+          for (var i=0;i<academys.length;i++)
+          {
+              var newOption = document.createElement("option");
+              newOption.text=academys[i].academy_name;
+              newOption.value=academys[i].academy_id;
+              document.getElementById("academy").add(newOption);
+          }
+          document.getElementById('academy').value = academy_id;
+      }
+      
+
+      init();
+      function edit() {
+
+        var gender = document.getElementById("gender").value;
+        
+        window.localStorage.setItem("gender", gender);
+        
+
+        var action = "update";
+        var url = "http://127.0.0.1:8080/WebCase/student?action=" + action + "&s_id=" + number_id + "&s_gender=" + gender + "&date_of_birth=" + birth + "&academy_id=" + academy + "&s_phone=" + phone + "&s_website=" + website + "&self_evaluation=" + evaluation + "&s_email=" + email;
+        url=encodeURI(encodeURI(url));
+        ajaxPost(url, "", callBack);
+        window.location.href = "user.html";
+      }
+    </script>
+  </body>
+</html>
